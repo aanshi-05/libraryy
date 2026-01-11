@@ -22,8 +22,9 @@ public class DatabaseConnection {
         int port = uri.getPort();
         String dbName = uri.getPath().substring(1); // Remove leading '/'
 
-        String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + dbName +
-                         "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+       String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + dbName +
+                 "?useSSL=true&requireSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+
 
         Class.forName("com.mysql.cj.jdbc.Driver"); // Load MySQL JDBC Driver
 
