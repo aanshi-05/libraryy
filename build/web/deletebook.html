@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Book</title>
+    
+   <body style="font-family: Arial, sans-serif; background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlLtiDCX3Qe8RbXpgr3NeFzo3A31N2BmHV1Q&s') no-repeat center center/cover; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+
+    <div style="width: 350px; background: rgba(255, 255, 255, 0.9); padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); border-radius: 10px; text-align: center;">
+        <h2 style="color: #333; margin-bottom: 20px;">Delete Book</h2>
+        <form action="DeleteBookServlet" method="POST">
+            <input type="number" name="id" placeholder="Enter Book ID" required 
+                style="width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;"><br>
+            
+            <button type="submit" 
+                style="width: 100%; padding: 10px; background-color: #FF5733; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                Delete Book
+            </button>
+            <br>
+    <a href="homepage.html">Back to Home</a> 
+    </form>
+    </div>
+
+</body>
+</html>

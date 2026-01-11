@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Books</title>
+</head>
+<body style="font-family: Arial, sans-serif; background: url('https://www.vervelogic.com/blog/wp-content/uploads/2019/08/LMS-model.png') no-repeat center center/cover; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+
+    <div style="width: 90%; max-width: 900px; background: rgba(255, 255, 255, 0.9); padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); border-radius: 10px; text-align: center;">
+        <h2 style="color: #333; margin-bottom: 20px;">Library Books</h2>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 16px;">
+            <thead>
+                <tr style="background-color: #007BFF; color: white;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">Book ID</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Title</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Author</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Action</th>
+                </tr>
+            </thead>
+            <tbody id="bookList">
+               
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+  
+        
+        function loadBooks() {
+            fetch('ViewBooksServlet')  // The servlet mapped to the "/viewbooks" URL
+                .then(response => response.text()) // Expecting HTML response from the servlet
+                .then(data => {
+                    document.getElementById('bookList').innerHTML = data; // Inject the data into the div
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        function deleteBook(id) {
+        if (confirm("Are you sure you want to delete this book?")) {
+            fetch('deletebook?id=' + id) // Call the delete servlet
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    loadBooks(); // Refresh list after deletion
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+    </script>
+</head>
+<body onload="loadBooks()">  
+    <h2>Library Books</h2>
+    <div id="bookList">
+       
+    </div>
+
+    <br>
+
+    <!-- Conditional Back to Home Page link for Admin -->
+    <script>
+        // Check if user is an admin from the session
+        const userRole = sessionStorage.getItem("role");  
+        if (userRole === "admin") {
+            document.write('<a href="homepage.html">Back to Home Page</a>');
+        }
+    </script>
+</body>
+</html>
