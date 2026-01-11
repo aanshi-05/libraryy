@@ -1,23 +1,36 @@
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/library_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root75";
     private static final int MAX_RETRIES = 10;   // Number of retry attempts
     private static final int RETRY_DELAY = 3000; // Delay between retries in milliseconds (3 seconds)
 
     public static Connection getConnection() throws Exception {
+        // Get DATABASE_URL from environment variables
+        String dbUrl = System.getenv("DATABASE_URL");
+        if (dbUrl == null || dbUrl.isEmpty()) {
+            throw new Exception("DATABASE_URL environment variable not set");
+        }
+
+        URI uri = new URI(dbUrl);
+        String user = uri.getUserInfo().split(":")[0];
+        String password = uri.getUserInfo().split(":")[1];
+        String host = uri.getHost();
+        int port = uri.getPort();
+        String dbName = uri.getPath().substring(1); // Remove leading '/'
+
+        String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + dbName +
+                         "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+
         Class.forName("com.mysql.cj.jdbc.Driver"); // Load MySQL JDBC Driver
 
         int retries = MAX_RETRIES;
-
         while (retries > 0) {
             try {
-                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                Connection conn = DriverManager.getConnection(jdbcUrl, user, password);
                 System.out.println("Database connected successfully!");
                 return conn;
             } catch (SQLException e) {
