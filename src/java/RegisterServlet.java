@@ -21,8 +21,8 @@ public class RegisterServlet extends HttpServlet {
         String role = request.getParameter("role"); 
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "root75");
+            Connection con = DatabaseConnection.getConnection();
+
 
             String query = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);

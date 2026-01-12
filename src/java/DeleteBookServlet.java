@@ -20,8 +20,8 @@ public class DeleteBookServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
 
            
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "root75");
+           Connection con = DatabaseConnection.getConnection();
+
 
             
             String query = "DELETE FROM books WHERE id = ?";
